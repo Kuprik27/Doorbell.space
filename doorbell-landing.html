@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doorbell Agency — Paid search &amp; social for local businesses</title>
+<style>
+  :root{
+    --bg:#FFFFFF;
+    --bg-soft:#F6F6F4;
+    --ink:#0B0B0F;
+    --ink-soft:#5C5C66;
+    --accent:#1E3AF0;
+    --accent-dark:#14257F;
+    --line:rgba(11,11,15,0.1);
+    --line-strong:rgba(11,11,15,0.22);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  h1,h2,h3{font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;font-weight:600;letter-spacing:-0.02em;margin:0;color:var(--ink);}
+  .mono{font-family:ui-monospace, 'SF Mono', 'Menlo', 'Consolas', monospace;}
+  a{color:inherit;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  section{padding:110px 0;position:relative;}
+  .border-top{border-top:1px solid var(--line);}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);}
+  .reveal.in{opacity:1;transform:translateY(0);}
+  .reveal-d1{transition-delay:.08s;} .reveal-d2{transition-delay:.16s;}
+  .reveal-d3{transition-delay:.24s;} .reveal-d4{transition-delay:.32s;}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:78px;}
+  .brand{display:flex;align-items:center;gap:10px;font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;font-weight:700;font-size:20px;}
+  .brand-suffix{font-weight:400;color:var(--ink-soft);margin-left:2px;}
+  .brand-mark{width:30px;height:30px;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .brand-mark svg{width:15px;height:15px;stroke:#fff;}
+  .nav-links{display:flex;gap:40px;font-size:14px;font-weight:500;}
+  .nav-links a{text-decoration:none;position:relative;padding-bottom:4px;}
+  .nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1.5px;background:var(--accent);transition:width .2s;}
+  .nav-links a:hover::after{width:100%;}
+  .nav-cta{background:var(--ink);color:#fff;padding:12px 22px;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;transition:background .18s;display:inline-block;}
+  .nav-cta:hover{background:var(--accent);}
+  @media(max-width:800px){.nav-links{display:none;}}
+
+  /* HERO */
+  .hero{padding:96px 0 80px;}
+  .hero-top{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:48px;border-bottom:1px solid var(--line);padding-bottom:40px;}
+  .eyebrow{font-family:ui-monospace, 'SF Mono', 'Menlo', 'Consolas', monospace;font-size:12px;letter-spacing:.05em;color:var(--accent);display:flex;align-items:center;gap:8px;margin-bottom:20px;}
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 1.8s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+  .hero h1{font-size:64px;line-height:1.02;font-weight:600;max-width:820px;}
+  @media(max-width:760px){.hero h1{font-size:38px;}}
+  .cycle-wrap{display:inline-block;position:relative;height:1.02em;overflow:hidden;vertical-align:top;min-width:1px;}
+  .cycle-word{color:var(--accent);white-space:nowrap;}
+  .hero-meta{text-align:right;flex-shrink:0;}
+  .hero-meta .num{font-family:ui-monospace, 'SF Mono', 'Menlo', 'Consolas', monospace;font-size:13px;color:var(--ink-soft);}
+  .hero-lower{max-width:600px;}
+  .hero p.lede{font-size:18px;color:var(--ink-soft);max-width:500px;}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px;}
+  .btn-primary{background:var(--ink);color:#fff;padding:16px 28px;font-weight:600;font-size:15px;text-decoration:none;display:inline-flex;align-items:center;gap:9px;transition:background .18s;}
+  .btn-primary:hover{background:var(--accent);}
+  .btn-primary svg{transition:transform .18s;}
+  .btn-primary:hover svg{transform:translateX(3px);}
+  .btn-secondary{padding:16px 28px;font-weight:600;font-size:15px;text-decoration:none;border:1px solid var(--line-strong);transition:border-color .18s;}
+  .btn-secondary:hover{border-color:var(--ink);}
+
+  /* QUICK FORM CARD */
+  .quick-form-card{border:1px solid var(--line-strong);border-radius:16px;padding:28px;position:relative;}
+  .quick-form-title{font-family:ui-monospace, 'SF Mono', 'Menlo', 'Consolas', monospace;font-size:11.5px;letter-spacing:.05em;color:var(--accent);display:block;margin-bottom:20px;}
+  .qf-field{margin-bottom:16px;}
+  .qf-field label{display:block;font-size:13.5px;font-weight:600;margin-bottom:8px;color:var(--ink);}
+  .qf-field input,.qf-field select{width:100%;padding:13px 14px;border:1px solid var(--line-strong);border-radius:10px;font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;font-size:14.5px;background:#fff;color:var(--ink);transition:border-color .15s;appearance:none;-webkit-appearance:none;}
+  .qf-field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235C5C66' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-size:16px;padding-right:38px;}
+  .qf-field input:focus,.qf-field select:focus{outline:none;border-color:var(--accent);}
+  .qf-toggle{display:flex;gap:8px;flex-wrap:wrap;}
+  .qf-toggle-opt{flex:1;min-width:100px;padding:11px 10px;border:1px solid var(--line-strong);border-radius:10px;background:#fff;font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:border-color .15s,background .15s,color .15s;}
+  .qf-toggle-opt:hover{border-color:var(--accent);}
+  .qf-toggle-opt.selected{border-color:var(--accent);background:var(--accent);color:#fff;}
+  .qf-submit{width:100%;background:var(--ink);color:#fff;border:none;border-radius:10px;padding:15px;font-weight:600;font-size:14.5px;cursor:pointer;margin-top:4px;transition:background .18s;}
+  .qf-submit:hover{background:var(--accent);}
+  .qf-note{font-size:11.5px;color:var(--ink-soft);text-align:center;margin:12px 0 0;}
+  .qf-done{display:none;text-align:center;padding:20px 4px;}
+  .qf-done.show{display:block;}
+  .quick-form-card form.hide{display:none;}
+
+  .sec-head{max-width:640px;margin-bottom:60px;}
+  .sec-tag{font-family:ui-monospace, 'SF Mono', 'Menlo', 'Consolas', monospace;font-size:12px;letter-spacing:.05em;color:var(--accent);margin-bottom:14px;display:block;}
+  .sec-head h2{font-size:38px;line-height:1.12;}
+  .sec-head p{color:var(--ink-soft);font-size:16px;margin-top:16px;}
+
+  /* SERVICES */
+  .services-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line);}
+  @media(max-width:820px){.services-grid{grid-template-columns:1fr;}}
+  .service-card{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:40px 32px;transition:background .2s;}
+  .service-card:hover{background:var(--bg-soft);}
+  .service-num{font-family:ui-monospace, 'SF Mono', 'Menlo', 'Consolas', monospace;color:var(--accent);font-size:12.5px;margin-bottom:22px;display:block;}
+  .service-card h3{font-size:19px;margin-bottom:12px;}
+  .service-card p{font-size:14.5px;color:var(--ink-soft);margin:0;}
+
+  /* PROCESS */
+  .process{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  @media(max-width:820px){.process{grid-template-columns:1fr 1fr;}}
+  @media(max-width:520px){.process{grid-template-columns:1fr;}}
+  .step{background:#fff;padding:32px 26px;}
+  .step-num{font-family:ui-monospace, 'SF Mono', 'Menlo', 'Consolas', monospace;font-size:12.5px;color:var(--accent);margin-bottom:18px;display:block;}
+  .step h3{font-size:16px;margin:0 0 8px;}
+  .step p{font-size:14px;color:var(--ink-soft);margin:0;}
+
+  /* PRICING */
+  .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line-strong);border-left:1px solid var(--line-strong);}
+  @media(max-width:900px){.pricing-grid{grid-template-columns:1fr;}}
+  .price-card{border-right:1px solid var(--line-strong);border-bottom:1px solid var(--line-strong);padding:40px 34px;display:flex;flex-direction:column;position:relative;}
+  .price-card.featured{background:var(--ink);color:#fff;}
+  .badge{font-family:ui-monospace, 'SF Mono', 'Menlo', 'Consolas', monospace;font-size:11px;color:var(--accent);margin-bottom:18px;display:block;}
+  .price-card.featured .badge{color:#8FA1FF;}
+  .price-card h3{font-size:18px;margin-bottom:8px;}
+  .price-card .price{font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;font-size:38px;font-weight:600;margin:18px 0 6px;}
+  .price-card .price span{font-size:14px;font-weight:400;color:var(--ink-soft);font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;}
+  .price-card.featured .price span{color:rgba(255,255,255,0.55);}
+  .price-card .desc{font-size:13.5px;color:var(--ink-soft);margin-bottom:26px;}
+  .price-card.featured .desc{color:rgba(255,255,255,0.65);}
+  .price-card ul{list-style:none;padding:0;margin:0 0 30px;flex-grow:1;}
+  .price-card li{font-size:14px;padding:11px 0;border-top:1px solid var(--line);display:flex;gap:10px;}
+  .price-card.featured li{border-top:1px solid rgba(255,255,255,0.14);}
+  .price-card li:first-child{border-top:none;}
+  .price-card li svg{width:14px;height:14px;stroke:var(--accent);flex-shrink:0;margin-top:3px;}
+  .price-card.featured li svg{stroke:#8FA1FF;}
+  .price-card .btn-secondary,.price-card .btn-primary{text-align:center;justify-content:center;}
+  .price-card.featured .btn-secondary{border-color:rgba(255,255,255,0.3);color:#fff;}
+  .price-card.featured .btn-secondary:hover{border-color:#fff;}
+
+  /* WHY */
+  .why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  @media(max-width:760px){.why-grid{grid-template-columns:1fr;}}
+  .why-grid-single{grid-template-columns:1fr;}
+  .why-item{background:#fff;padding:32px 30px;display:flex;gap:18px;}
+  .why-item-featured{grid-column:1 / -1;background:rgba(30,58,240,0.04);padding:32px 30px;}
+  .why-item-featured .why-icon{background:rgba(30,58,240,0.1);}
+  .turnkey-head{display:flex;gap:18px;margin-bottom:26px;}
+  .turnkey-split{display:grid;grid-template-columns:0.8fr 1.2fr;gap:0;border-top:1px solid rgba(30,58,240,0.15);}
+  @media(max-width:640px){.turnkey-split{grid-template-columns:1fr;}}
+  .turnkey-col{padding:22px 24px;}
+  .turnkey-you{border-right:1px solid rgba(30,58,240,0.15);}
+  @media(max-width:640px){.turnkey-you{border-right:none;border-bottom:1px solid rgba(30,58,240,0.15);}}
+  .turnkey-label{font-family:ui-monospace, 'SF Mono', 'Menlo', 'Consolas', monospace;font-size:11px;letter-spacing:.05em;color:var(--ink-soft);text-transform:uppercase;display:block;margin-bottom:14px;}
+  .turnkey-list{list-style:none;margin:0;padding:0;}
+  .turnkey-list li{font-size:14px;padding:7px 0;color:var(--ink-soft);}
+  .turnkey-you .turnkey-list li{color:var(--ink);font-weight:500;}
+  .turnkey-list-check li{display:flex;gap:9px;align-items:flex-start;}
+  .turnkey-list-check li svg{width:15px;height:15px;stroke:var(--accent);flex-shrink:0;margin-top:2px;}
+  .why-icon{width:38px;height:38px;background:var(--bg-soft);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .why-icon svg{width:18px;height:18px;stroke:var(--accent);}
+  .why-item h3{font-size:16px;margin-bottom:8px;}
+  .why-item p{font-size:14px;color:var(--ink-soft);margin:0;}
+
+  /* TESTIMONIAL */
+  .testi-card{background:var(--ink);color:#fff;padding:56px;}
+  .testi-kicker{font-family:ui-monospace, 'SF Mono', 'Menlo', 'Consolas', monospace;font-size:11.5px;letter-spacing:.05em;color:var(--accent);text-transform:uppercase;display:block;margin-bottom:18px;}
+  .testi-card p.quote{font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;font-weight:500;font-size:21px;line-height:1.55;max-width:760px;}
+
+  /* FAQ */
+  .faq-item{border-top:1px solid var(--line);padding:24px 0;}
+  .faq-item:last-child{border-bottom:1px solid var(--line);}
+  .faq-q{display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-weight:600;font-size:16.5px;gap:16px;font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;}
+  .faq-q svg{width:16px;height:16px;stroke:var(--accent);flex-shrink:0;transition:transform .25s;}
+  .faq-item.open .faq-q svg{transform:rotate(45deg);}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+  .faq-item.open .faq-a{max-height:200px;}
+  .faq-a p{font-size:14.5px;color:var(--ink-soft);margin:14px 0 0;}
+
+  /* CTA */
+  .cta-section{background:var(--bg-soft);}
+  .cta-heading{max-width:640px;margin:0 auto 48px;text-align:center;}
+  .cta-heading h2{font-size:34px;margin:14px 0 12px;}
+  .cta-heading p{color:var(--ink-soft);font-size:16px;}
+  .cta-grid2{display:grid;grid-template-columns:0.85fr 1fr;gap:24px;align-items:start;}
+  @media(max-width:860px){.cta-grid2{grid-template-columns:1fr;}}
+
+  .info-card{background:rgba(30,58,240,0.05);border:1px solid rgba(30,58,240,0.15);border-radius:16px;padding:32px;}
+  .info-card h3{font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;font-size:19px;font-weight:600;margin-bottom:20px;}
+  .check-list{list-style:none;padding:0;margin:0 0 24px;}
+  .check-list li{display:flex;gap:12px;font-size:14.5px;padding:11px 0;border-top:1px solid rgba(30,58,240,0.12);align-items:flex-start;}
+  .check-list li:first-child{border-top:none;}
+  .check-list li svg{width:16px;height:16px;stroke:#00A870;flex-shrink:0;margin-top:2px;}
+  .info-privacy{display:flex;gap:10px;font-size:12.5px;color:var(--ink-soft);border-top:1px solid rgba(30,58,240,0.15);padding-top:18px;align-items:flex-start;}
+  .info-privacy svg{width:15px;height:15px;stroke:var(--ink-soft);flex-shrink:0;margin-top:1px;}
+  .info-privacy a{color:var(--accent);text-decoration:underline;}
+
+  form{background:#fff;border:1px solid var(--line-strong);border-radius:16px;padding:32px;}
+  .simple-form.hide{display:none;}
+  .quiz-done{display:none;text-align:center;padding:20px 4px;}
+  .quiz-done.show{display:block;}
+  .sf-field{margin-bottom:18px;}
+  .sf-field label{display:block;font-size:13.5px;font-weight:600;margin-bottom:8px;color:var(--ink);}
+  .sf-field input,.sf-field select{width:100%;padding:14px 16px;border:1px solid var(--line-strong);border-radius:10px;font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;font-size:15px;background:#fff;color:var(--ink);transition:border-color .15s;appearance:none;-webkit-appearance:none;}
+  .sf-field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235C5C66' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-size:16px;padding-right:40px;}
+  .sf-field input:focus,.sf-field select:focus{outline:none;border-color:var(--accent);}
+  #auditForm .qf-toggle-opt{border-radius:10px;}
+  #auditForm .submit-btn{border-radius:10px;}
+  .quiz-progress{height:2px;background:var(--line);margin-bottom:30px;overflow:hidden;}
+  .quiz-progress-bar{height:100%;width:20%;background:var(--accent);transition:width .4s cubic-bezier(.16,1,.3,1);}
+  .quiz-steps{position:relative;min-height:150px;}
+  .quiz-step{display:none;opacity:0;transform:translateX(14px);transition:opacity .35s ease,transform .35s ease;}
+  .quiz-step.active{display:block;opacity:1;transform:translateX(0);}
+  .quiz-step.leaving{transform:translateX(-14px);opacity:0;}
+  .quiz-label{font-family:ui-monospace, 'SF Mono', 'Menlo', 'Consolas', monospace;font-size:11.5px;color:var(--accent);letter-spacing:.04em;}
+  .quiz-q{display:block;font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;font-size:20px;font-weight:600;margin:12px 0 20px;}
+  .quiz-options{display:flex;flex-direction:column;gap:10px;}
+  .quiz-opt{text-align:left;padding:15px 16px;border:1px solid var(--line-strong);background:#fff;font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;font-size:14.5px;font-weight:500;cursor:pointer;transition:border-color .15s,background .15s;}
+  .quiz-opt:hover{border-color:var(--accent);background:var(--bg-soft);}
+  .quiz-opt.selected{border-color:var(--accent);background:var(--bg-soft);color:var(--accent);}
+  .quiz-steps input{width:100%;padding:15px 16px;border:1px solid var(--line-strong);font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;font-size:15px;background:#fff;color:var(--ink);transition:border-color .15s;}
+  .quiz-steps input:focus{outline:none;border-color:var(--accent);}
+  .quiz-next{margin-top:20px;background:var(--ink);color:#fff;border:none;padding:15px 26px;font-weight:600;font-size:14.5px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .18s;}
+  .quiz-next:hover{background:var(--accent);}
+  .submit-btn{width:100%;background:var(--ink);color:#fff;border:none;padding:16px;font-weight:600;font-size:15px;cursor:pointer;transition:background .18s;}
+  .submit-btn:hover{background:var(--accent);}
+  .quiz-done{text-align:center;padding:20px 0;}
+  .quiz-done-icon{width:48px;height:48px;background:var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;}
+  .quiz-done-icon svg{width:22px;height:22px;stroke:#fff;}
+  .form-note{font-size:12px;color:var(--ink-soft);text-align:center;margin-top:16px;}
+
+  footer{border-top:1px solid var(--line);padding:44px 0;}
+  footer .wrap{display:flex;flex-direction:column;gap:24px;}
+  .foot-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+  .foot-links{display:flex;gap:26px;font-size:13px;color:var(--ink-soft);}
+  .foot-links a{text-decoration:none;}
+  .foot-bottom{width:100%;border-top:1px solid var(--line);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:12.5px;color:var(--ink-soft);}
+
+  /* MODAL */
+  .modal-overlay{
+    display:none;position:fixed;inset:0;z-index:200;
+    background:rgba(15,18,34,0.55);backdrop-filter:blur(3px);
+    padding:24px;overflow-y:auto;
+    align-items:flex-start;justify-content:center;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal-card{
+    background:#fff;border-radius:16px;max-width:900px;width:100%;
+    margin:40px auto;padding:44px;position:relative;
+    animation:modalIn .25s cubic-bezier(.16,1,.3,1);
+  }
+  @media(max-width:600px){.modal-card{padding:28px 22px;margin:16px auto;}}
+  @keyframes modalIn{from{opacity:0;transform:translateY(16px) scale(.98);}to{opacity:1;transform:translateY(0) scale(1);}}
+  .modal-close{
+    position:absolute;top:20px;right:20px;width:36px;height:36px;
+    border:1px solid var(--line-strong);background:#fff;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+    transition:border-color .15s,background .15s;
+  }
+  .modal-close:hover{border-color:var(--ink);background:var(--bg-soft);}
+  .modal-close svg{width:16px;height:16px;stroke:var(--ink);}
+  .modal-direct{margin-top:22px;padding-top:18px;border-top:1px solid rgba(30,58,240,0.15);}
+  .modal-direct-label{display:block;font-family:ui-monospace, 'SF Mono', 'Menlo', 'Consolas', monospace;font-size:11px;letter-spacing:.05em;color:var(--ink-soft);text-transform:uppercase;margin-bottom:8px;}
+  .modal-direct a{font-size:14px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .modal-direct a:hover{text-decoration:underline;}
+  body.modal-open{overflow:hidden;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">
+      <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
+      Doorbell<span class="brand-suffix">Agency</span>
+    </div>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a class="nav-cta js-consult-trigger" href="#audit">Get a free audit</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-top">
+      <div>
+        <h1>We make the phone ring for <span class="cycle-wrap"><span class="cycle-word mono" id="cycleWord">auto shops</span></span>.</h1>
+      </div>
+      <div class="hero-meta">
+        <span class="num">EST. 2024</span><br>
+        <span class="num">Barrie, ON</span>
+      </div>
+    </div>
+    <div class="hero-lower">
+      <p class="lede">Turnkey advertising for your business — setup, campaigns, tracking, optimization, all handled by us. You run your business. We fill your calendar. Live in days, not weeks, with a weekly report you'll actually want to read: leads booked, cost per lead, nothing padded in to look good.</p>
+      <div class="hero-ctas">
+        <a class="btn-primary js-consult-trigger" href="#audit">Request a free consultation <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn-secondary" href="#pricing">See pricing</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="border-top" id="pricing">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">Pricing</span>
+      <h2>Flat monthly fee. Ad spend stays in your control.</h2>
+      <p>All plans include weekly reporting and a dedicated point of contact — no account gets handed to a junior.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card reveal reveal-d1">
+        <span class="badge">Starter</span>
+        <h3>For testing the channel</h3>
+        <p class="desc">One channel, one location. Full setup and hands-on management, scoped for smaller budgets.</p>
+        <div class="price">$425<span>/mo</span></div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Google Ads <b>or</b> Meta Ads (one channel)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Full account setup from scratch</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Keyword or audience research</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Ad copy &amp; creative included</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Call &amp; form tracking setup</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Weekly report, plain English</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Min. ad spend $25/day</li>
+        </ul>
+        <a class="btn-secondary js-consult-trigger" href="#audit">Start with an audit</a>
+      </div>
+      <div class="price-card featured reveal reveal-d2">
+        <span class="badge">Growth — most chosen</span>
+        <h3>The core offer</h3>
+        <p class="desc">Both channels working together — what most single-location businesses land on.</p>
+        <div class="price">$1,275<span>/mo</span></div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Google Ads <b>+</b> Meta Ads, one location</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Everything in Starter, both channels</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Landing page review + fixes</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Retargeting campaign included</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>A/B testing on ad creative</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Bi-weekly strategy call</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Priority response, same business day</li>
+        </ul>
+        <a class="btn-secondary js-consult-trigger" href="#audit">Start with an audit</a>
+      </div>
+      <div class="price-card reveal reveal-d3">
+        <span class="badge">Full funnel</span>
+        <h3>For scaling past one channel</h3>
+        <p class="desc">Multi-location or higher ad spend. Built for businesses ready to grow.</p>
+        <div class="price">$2,550<span>+/mo</span></div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Everything in Growth, multi-location</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Multi-location campaign structuring</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Custom landing pages per location</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Full funnel + CRM integration</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Cross-location performance reporting</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Weekly strategy call</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Direct line for urgent changes</li>
+        </ul>
+        <a class="btn-secondary js-consult-trigger" href="#audit">Talk to us</a>
+      </div>
+    </div>
+    <p style="text-align:center;font-size:13px;color:var(--ink-soft);margin-top:32px;" class="reveal">Priced roughly 15% below typical agency rates for the same scope — most agencies charge $500&ndash;$1,500/mo for basic Google Ads management alone, and $1,500+ once you add Meta.</p>
+  </div>
+</section>
+
+<section class="border-top" id="services">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">What we run</span>
+      <h2>Three services. No bloated retainer.</h2>
+      <p>We don't sell "digital marketing packages." We run the two channels that actually bring local customers in the door, and we set up the tracking so you can see it working.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal reveal-d1">
+        <span class="service-num">01</span>
+        <h3>Google Ads management</h3>
+        <p>Search campaigns built around what people type when they need you today — "plumber near me," "same day," "emergency." Tight geo-targeting so budget never leaks outside your service area.</p>
+      </div>
+      <div class="service-card reveal reveal-d2">
+        <span class="service-num">02</span>
+        <h3>Meta ads management</h3>
+        <p>Facebook and Instagram campaigns built for awareness and retargeting — showing up again to people who already visited your site or page but didn't book.</p>
+      </div>
+      <div class="service-card reveal reveal-d3">
+        <span class="service-num">03</span>
+        <h3>Tracking &amp; landing pages</h3>
+        <p>Call tracking, booking-form tracking, and a fast landing page if you don't have one that converts. Without this, you're guessing. With it, every dollar is accounted for.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="border-top" id="process">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">Process</span>
+      <h2>From first call to live campaign in days.</h2>
+    </div>
+    <div class="process">
+      <div class="step reveal reveal-d1"><span class="step-num">01 — Day 1</span><h3>Free audit call</h3><p>15 minutes. We look at your current setup and tell you honestly if paid ads make sense right now.</p></div>
+      <div class="step reveal reveal-d2"><span class="step-num">02 — Day 2–3</span><h3>Setup &amp; tracking</h3><p>Accounts built, tracking installed, landing page reviewed before anything goes live.</p></div>
+      <div class="step reveal reveal-d3"><span class="step-num">03 — Day 3–4</span><h3>Launch &amp; monitor</h3><p>Campaigns go live on a small daily budget. We watch closely from day one.</p></div>
+      <div class="step reveal reveal-d4"><span class="step-num">04 — Ongoing</span><h3>Weekly report</h3><p>A short weekly note: leads, cost per lead, what changed. No 40-slide decks.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="border-top">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">Why local businesses pick us</span>
+      <h2>We work in your city, not with your competitor across the street.</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-item-featured reveal reveal-d1">
+        <div class="turnkey-head">
+          <span class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
+          <div><h3>Turnkey advertising, start to finish</h3><p>Everything below is on us. Nothing on your plate.</p></div>
+        </div>
+        <div class="turnkey-split">
+          <div class="turnkey-col turnkey-you">
+            <span class="turnkey-label">What you do</span>
+            <ul class="turnkey-list">
+              <li>Take the calls that come in</li>
+            </ul>
+          </div>
+          <div class="turnkey-col turnkey-us">
+            <span class="turnkey-label">What we handle</span>
+            <ul class="turnkey-list turnkey-list-check">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Google &amp; Meta account setup</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Campaign strategy &amp; targeting</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Ad creative &amp; copy</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Call &amp; form tracking</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Daily monitoring &amp; optimization</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Weekly plain-English reporting</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="why-item reveal reveal-d2">
+        <span class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 5v5l3 3"/></svg></span>
+        <div><h3>Tight local targeting</h3><p>Campaigns are geo-fenced to your real service area, so budget never pays for clicks from people you can't serve.</p></div>
+      </div>
+      <div class="why-item reveal reveal-d3">
+        <span class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+        <div><h3>One client per category, per city</h3><p>We don't run ads for two competing auto shops in the same town. If your niche and city are taken, we'll tell you.</p></div>
+      </div>
+      <div class="why-item reveal reveal-d4">
+        <span class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v4H4zM4 12h16v8H4z"/></svg></span>
+        <div><h3>Plain-English reporting</h3><p>Leads and cost per lead, weekly. No vanity metrics like "impressions" dressed up as results.</p></div>
+      </div>
+      <div class="why-item reveal reveal-d1">
+        <span class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></span>
+        <div><h3>No contract lock-in</h3><p>Month to month. If it's not working, you're not stuck paying for three more months to find out.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="border-top">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">Who's behind this</span>
+      <h2>A real, single-operator shop — not a call centre.</h2>
+      <p>Doorbell Agency is registered in Ontario, Canada. Every account is set up and managed by the same person you talk to on the audit call — not handed off to a junior after the sales pitch.</p>
+    </div>
+    <div class="why-grid why-grid-single">
+      <div class="why-item reveal reveal-d1">
+        <span class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.32 1.85.55 2.81.68A2 2 0 0 1 22 16.92z"/></svg></span>
+        <div><h3>Direct contact</h3><p><a href="https://t.me/Door_BellSup" target="_blank" rel="noopener" class="contact-link" data-channel="Telegram">@Door_BellSup</a> &middot; [WhatsApp] &middot; reply within one business day, always from a real person.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="border-top">
+  <div class="wrap">
+    <div class="testi-card reveal">
+      <span class="testi-kicker">A note on being new</span>
+      <p class="quote">Doorbell Agency is a new shop, and I'd rather say that upfront than dress up a fake case study. What you get instead: full attention on every account, pricing that reflects a lean operation instead of agency overhead, and someone who picks up the phone — not a rotating cast of account managers.</p>
+    </div>
+  </div>
+</section>
+
+<section class="border-top" id="faq">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">FAQ</span>
+      <h2>Before you ask</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">Is $25/day really enough to see results?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></div>
+        <div class="faq-a"><p>Yes, if targeting stays narrow — one city, one service, long-tail keywords instead of broad expensive ones. That's exactly how we set up Starter plans. It won't get you national volume, but it's enough to validate the channel and get your first bookings.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Do you take over my existing ad accounts or start fresh?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></div>
+        <div class="faq-a"><p>Either. If you already have Google or Meta accounts, we audit and take over management. If not, we set up new ones under your own business — you always own the account, not us.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What happens to my account if I cancel?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></div>
+        <div class="faq-a"><p>It stays yours. We never manage from an account we control — everything lives under your Business Manager and Google account from day one.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can you guarantee results?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></div>
+        <div class="faq-a"><p>No agency honestly can — anyone promising guaranteed leads is selling you a story. What we commit to is transparent setup, tight targeting, and pulling the plug fast on anything that's not converting.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="brand">
+        <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
+        Doorbell<span class="brand-suffix">Agency</span>
+      </div>
+      <div class="foot-links">
+        <a href="#services">Services</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a class="js-consult-trigger" href="#audit">Get an audit</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>Doorbell Agency &middot; Barrie, Ontario, Canada — online-based &middot; <a href="https://t.me/Door_BellSup" target="_blank" rel="noopener" class="contact-link" data-channel="Telegram">@Door_BellSup</a> &middot; [WhatsApp]</span>
+      <div class="foot-links">
+        <a href="privacy.html">Privacy policy</a>
+        <a href="terms.html">Terms of service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="consultModal">
+  <div class="modal-card">
+    <button type="button" class="modal-close" id="modalClose" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div class="cta-heading" style="margin-bottom:32px;">
+      <span class="sec-tag">Free consultation</span>
+      <h2>Request a free consultation</h2>
+      <p>Fill out the form — we'll get back to you within one business day.</p>
+    </div>
+    <div class="cta-grid2">
+      <div class="info-card">
+        <h3>What happens next</h3>
+        <ul class="check-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>We review your business, city &amp; budget</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Short call on Telegram or WhatsApp</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Straight answer, even if it's "not yet"</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Response within one business day</li>
+        </ul>
+        <div class="info-privacy">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span>Your data is used only to process this request. See <a href="privacy.html" target="_blank">Privacy Policy</a>.</span>
+        </div>
+        <div class="modal-direct">
+          <span class="modal-direct-label">Or reach out directly</span>
+          <a href="https://t.me/Door_BellSup" target="_blank" rel="noopener" class="contact-link" data-channel="Telegram">@Door_BellSup on Telegram</a>
+        </div>
+      </div>
+      <form id="auditForm" onsubmit="return false;">
+        <div class="simple-form">
+          <div class="sf-field">
+            <label for="name">Your Name</label>
+            <input id="name" type="text" placeholder="John Smith" required>
+          </div>
+          <div class="sf-field">
+            <label for="bizType">Business type</label>
+            <select id="bizType">
+              <option>Auto repair</option>
+              <option>Dental / Medical</option>
+              <option>Hair &amp; beauty</option>
+              <option>Home services / Contractor</option>
+              <option>Other local business</option>
+            </select>
+          </div>
+          <div class="sf-field">
+            <label for="city">City / service area</label>
+            <input id="city" type="text" placeholder="Barrie, ON" required>
+          </div>
+          <div class="sf-field">
+            <label for="budget">Monthly ad budget</label>
+            <select id="budget">
+              <option>$25–50 / day</option>
+              <option>$50–100 / day</option>
+              <option>$100–200 / day</option>
+              <option>$200+ / day</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+          <div class="sf-field">
+            <label for="contact">Your Telegram or WhatsApp</label>
+            <input id="contact" type="text" placeholder="@username or +1 234 567 8900" required>
+          </div>
+          <div class="sf-field">
+            <label>Preferred messenger</label>
+            <div class="qf-toggle">
+              <button type="button" class="qf-toggle-opt selected" data-value="Telegram">Telegram</button>
+              <button type="button" class="qf-toggle-opt" data-value="WhatsApp">WhatsApp</button>
+            </div>
+          </div>
+          <button type="button" class="submit-btn" id="quizSubmit">Request my free audit</button>
+          <p class="form-note">We reply within one business day. No spam, ever.</p>
+        </div>
+        <div class="quiz-done" id="auditDone">
+          <div class="quiz-done-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <p style="font-size:17px;font-weight:600;margin:0 0 6px;">Request received.</p>
+          <p style="font-size:14px;color:var(--ink-soft);margin:0;">We'll reach out on <span id="auditChannelOut">Telegram</span> within one business day.</p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const modal = document.getElementById('consultModal');
+  const closeBtn = document.getElementById('modalClose');
+  if(!modal) return;
+
+  function openModal(){
+    modal.classList.add('open');
+    document.body.classList.add('modal-open');
+  }
+  function closeModal(){
+    modal.classList.remove('open');
+    document.body.classList.remove('modal-open');
+  }
+
+  document.querySelectorAll('.js-consult-trigger').forEach(el=>{
+    el.addEventListener('click', (e)=>{
+      e.preventDefault();
+      openModal();
+    });
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e)=>{
+    if(e.target === modal) closeModal();
+  });
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+  });
+})();
+
+document.querySelectorAll('.faq-item').forEach(item=>{
+  item.querySelector('.faq-q').addEventListener('click',()=>{
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+    if(!wasOpen) item.classList.add('open');
+  });
+});
+
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+},{threshold:0.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+(function(){
+  const words = ['auto shops','dental clinics','hair salons','contractors','law firms','pet clinics'];
+  const el = document.getElementById('cycleWord');
+  let i = 0;
+  setInterval(()=>{
+    i = (i+1) % words.length;
+    el.style.transition = 'opacity .25s ease, transform .25s ease';
+    el.style.opacity = 0;
+    el.style.transform = 'translateY(6px)';
+    setTimeout(()=>{
+      el.textContent = words[i];
+      el.style.transform = 'translateY(-6px)';
+      requestAnimationFrame(()=>{
+        el.style.opacity = 1;
+        el.style.transform = 'translateY(0)';
+      });
+    },250);
+  },2400);
+})();
+
+(function(){
+  // ==== TELEGRAM BOT CONFIG — replace with your own values from @BotFather ====
+  const TELEGRAM_BOT_TOKEN = '8998606747:AAHBilUAjTzn8HhP_SgYsHGkYyRtOfrV3rc';
+  const TELEGRAM_CHAT_ID = '6527698975';
+  // ==============================================================================
+
+  const form = document.getElementById('auditForm');
+  if(!form) return;
+  const simpleForm = form.querySelector('.simple-form');
+  let selectedChannel = 'Telegram';
+
+  form.querySelectorAll('.qf-toggle-opt').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      form.querySelectorAll('.qf-toggle-opt').forEach(b=>b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedChannel = btn.dataset.value;
+    });
+  });
+
+  async function sendToTelegram(data){
+    const text =
+      `🔔 New lead — Doorbell Agency\n\n` +
+      `👤 Name: ${data.name}\n` +
+      `🏢 Business type: ${data.bizType}\n` +
+      `📍 City: ${data.city}\n` +
+      `💰 Monthly ad budget: ${data.budget}\n` +
+      `💬 Contact: ${data.contact}\n` +
+      `📲 Preferred messenger: ${data.channel}`;
+
+    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: text })
+    });
+    if(!res.ok) throw new Error('Telegram send failed: ' + res.status);
+  }
+
+  // Notify on direct Telegram/WhatsApp link clicks (soft leads who skip the form)
+  function notifyClick(channel){
+    const text = `👀 Someone clicked your ${channel} link on the site — no form filled out yet.`;
+    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+    fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: text })
+    }).catch(err => console.error('Click notify failed:', err));
+  }
+  document.querySelectorAll('.contact-link').forEach(link=>{
+    link.addEventListener('click', ()=>{
+      notifyClick(link.dataset.channel || 'contact');
+      // link still navigates normally — this doesn't block the click
+    });
+  });
+
+  document.getElementById('quizSubmit').addEventListener('click', async ()=>{
+    const inputs = simpleForm.querySelectorAll('input[required]');
+    let valid = true;
+    inputs.forEach(inp=>{ if(!inp.value.trim()){ valid = false; inp.style.borderColor = '#E14B2C'; } else { inp.style.borderColor = ''; } });
+    if(!valid) return;
+
+    const submitBtn = document.getElementById('quizSubmit');
+    const originalLabel = submitBtn.textContent;
+    submitBtn.textContent = 'Sending...';
+    submitBtn.disabled = true;
+
+    const data = {
+      name: document.getElementById('name').value.trim(),
+      bizType: document.getElementById('bizType').value,
+      city: document.getElementById('city').value.trim(),
+      budget: document.getElementById('budget').value,
+      contact: document.getElementById('contact').value.trim(),
+      channel: selectedChannel
+    };
+
+    try {
+      await sendToTelegram(data);
+      document.getElementById('auditChannelOut').textContent = selectedChannel;
+      simpleForm.classList.add('hide');
+      document.getElementById('auditDone').classList.add('show');
+    } catch(err) {
+      submitBtn.textContent = originalLabel;
+      submitBtn.disabled = false;
+      alert('Something went wrong sending your request. Please try again, or reach out directly on Telegram/WhatsApp.');
+      console.error(err);
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
